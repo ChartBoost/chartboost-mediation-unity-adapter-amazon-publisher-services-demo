@@ -9,7 +9,7 @@
             url "https://cboost.jfrog.io/artifactory/chartboost-mediation/" // Assets/com.chartboost.mediation/Editor/ChartboostMediationDependencies.xml:7
         }
         maven {
-            url "https://aws.oss.sonatype.org/content/repositories/releases/" // Packages/com.chartboost.mediation.unity.aps/Editor/AmazonPublisherServicesAdapterDependencies.xml:12
+            url "https://aws.oss.sonatype.org/content/repositories/releases/" // Packages/com.chartboost.mediation.unity.aps/Editor/AmazonPublisherServicesAdapterDependencies.xml:13
         }
         mavenLocal()
         mavenCentral()
@@ -32,6 +32,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-appset:16.0.2' // Assets/com.chartboost.mediation/Editor/ChartboostMediationDependencies.xml:25
     implementation 'com.google.android.gms:play-services-base:18.1.0' // Assets/com.chartboost.mediation/Editor/ChartboostMediationDependencies.xml:23
     implementation 'com.google.android.gms:play-services-basement:18.1.0' // Assets/com.chartboost.mediation/Editor/ChartboostMediationDependencies.xml:26
+    implementation 'com.iabtcf:iabtcf-decoder:2.0.10' // Packages/com.chartboost.mediation.unity.aps/Editor/AmazonPublisherServicesAdapterDependencies.xml:9
     implementation 'com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0' // Assets/com.chartboost.mediation/Editor/ChartboostMediationDependencies.xml:12
     implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0' // Assets/com.chartboost.mediation/Editor/ChartboostMediationDependencies.xml:16
     implementation 'com.squareup.okhttp3:okhttp:4.10.0' // Assets/com.chartboost.mediation/Editor/ChartboostMediationDependencies.xml:15
