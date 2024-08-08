@@ -1,9 +1,9 @@
 {
   "dependencies": {
-    "com.chartboost.core": "file:../../com.chartboost.core",
+    "com.chartboost.core": "1.0.0",
     "com.chartboost.mediation": "5.0.0",
-    "com.chartboost.mediation.unity.adapter.amazon-publisher-services": "file:../../com.chartboost.mediation.adapters/com.chartboost.mediation.unity.adapter.amazon-publisher-services",
-    "com.chartboost.unity.logging": "file:../../com.chartboost.unity.logging",
+    "com.chartboost.mediation.unity.adapter.amazon-publisher-services": "5.0.0",
+    "com.chartboost.unity.logging": "1.0.0",
     "com.chartboost.unity.threading": "1.0.1",
     "com.chartboost.unity.utilities": "1.0.1",
     "com.google.external-dependency-manager": "1.2.181",
@@ -66,6 +66,7 @@
     "com.chartboost.core",
     "com.chartboost.mediation",
     "com.chartboost.mediation.unity.adapter.amazon-publisher-services",
+    "com.chartboost.unity.logging",
     "com.chartboost.unity.threading",
     "com.chartboost.unity.utilities"
   ]
