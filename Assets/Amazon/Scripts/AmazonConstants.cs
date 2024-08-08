@@ -2,7 +2,7 @@ using System;
 
 public static class AmazonConstants
 {
-    public const string VERSION = "1.8.0";
+    public const string VERSION = "1.9.1";
     public const string RELEASE_NOTES_URL = "https://ams.amazon.com/webpublisher/uam/docs/aps-mobile/resources"; //TODO : add Unity Release Notes link
 
     public const string titleAboutDialog = "About Amazon SDK";
