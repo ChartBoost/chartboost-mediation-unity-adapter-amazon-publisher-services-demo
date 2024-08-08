@@ -13,16 +13,17 @@ namespace Sample
         public override Task<AmazonPublisherServicesAdapterPreBidAdInfo> OnPreBid(AmazonPublisherServicesAdapterPreBidRequest request)
         {
             AdRequest adRequest;
-            var amazonSetting = request.AmazonSettings;
-            var width = amazonSetting.Width ?? 0;
-            var height = amazonSetting.Height ?? 0;
-            var amazonPlacement = amazonSetting.PartnerPlacement;
+            var bannerSize = request.BannerSize;
+            var amazonSettings = request.AmazonSettings;
+            var amazonPlacement = amazonSettings.PartnerPlacement;
             
-            Debug.Log($"{Tag} Format: {request.Format}, Chartboost Placement: {request.ChartboostPlacement}, Amazon Placement: {amazonPlacement}");
+            Debug.Log($"{Tag} Format: {request.Format}, Chartboost Placement: {request.MediationPlacement}, Amazon Placement: {amazonPlacement}");
 
             switch (request.Format)
             {
                 case "rewarded":
+                    var width = amazonSettings.Width ?? 0;
+                    var height = amazonSettings.Height ?? 0;
                     adRequest = new APSVideoAdRequest(width, height, amazonPlacement);
                     break;
 
@@ -33,7 +34,9 @@ namespace Sample
 
                 case "banner":
                 case "adaptive_banner":
-                    adRequest = new APSBannerAdRequest(width, height, amazonPlacement);
+                    var bannerWidth = bannerSize.HasValue ? (int)bannerSize.Value.Width : 0;
+                    var bannerHeight = bannerSize.HasValue ? (int)bannerSize.Value.Height : 0;
+                    adRequest = new APSBannerAdRequest(bannerWidth, bannerHeight, amazonPlacement);
                     break;
                 
                 default:
@@ -41,11 +44,16 @@ namespace Sample
                     return Task.FromResult(new AmazonPublisherServicesAdapterPreBidAdInfo(null, null));
             }
 
+            foreach (var keyword in  request.Keywords)
+            { 
+                adRequest.PutCustomTarget(keyword.Key, keyword.Value);
+            }
+
             var taskCompletionSource = new TaskCompletionSource<AmazonPublisherServicesAdapterPreBidAdInfo>();
             
             adRequest.onSuccess += response =>
             {
-                Debug.Log($"{Tag} Response succeeded for: CBP: {request.ChartboostPlacement} - AMZP: {amazonPlacement}!");
+                Debug.Log($"{Tag} Response succeeded for: CBP: {request.MediationPlacement} - AMZP: {amazonPlacement}!");
                 #if UNITY_IOS
                 taskCompletionSource.SetResult(new AmazonPublisherServicesAdapterPreBidAdInfo(response.GetPricePoint(), response.GetMediationHints()));
                 #elif UNITY_ANDROID

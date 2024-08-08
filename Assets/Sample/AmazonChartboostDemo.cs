@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using AmazonAds;
-using Chartboost;
-using Chartboost.AdFormats.Banner;
-using Chartboost.AdFormats.Fullscreen;
-using Chartboost.Banner;
+using Chartboost.Core;
+using Chartboost.Core.Initialization;
+using Chartboost.Mediation;
+using Chartboost.Mediation.Ad.Banner;
+using Chartboost.Mediation.Ad.Fullscreen;
 using Chartboost.Mediation.AmazonPublisherServices;
 using Chartboost.Mediation.AmazonPublisherServices.Common;
-using Chartboost.Requests;
+using Chartboost.Mediation.Requests;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,9 +24,9 @@ namespace Sample
 
         private readonly Color _orange = new(255, 128, 0);
 
-        private IChartboostMediationFullscreenAd _interstitialAd;
-        private IChartboostMediationFullscreenAd _rewardedAd;
-        private IChartboostMediationBannerView _bannerView;
+        private IFullscreenAd _interstitialAd;
+        private IFullscreenAd _rewardedAd;
+        private IBannerAd _bannerAd;
 
         private bool _chartboostMediationInitialized;
 
@@ -33,16 +34,25 @@ namespace Sample
         private const string AmazonAPIKeyIOS = "f2b4893c-8585-42b3-ab6c-b0e943a17c0c";
         
         private const string AndroidAppId = "5a4e797538a5f00cf60738d6";
-        private const string AndroidAppSignature = "d29d75ce6213c746ba986f464e2b4a510be40399";
         private const string IOSAppId = "59c04299d989d60fc5d2c782";
-        private const string IOSAppSignature = "6deb8e06616569af9306393f2ce1c9f8eefb405c";
 
         private const string BannerPlacement = "APSBannerStandard";
         private const string InterstitialPlacement = "APSInterstitial";
         private const string RewardedPlacement = "APSRewarded";
 
-        private string AmazonAPIKey => Application.platform == RuntimePlatform.Android ? AmazonAPIKeyAndroid :
-            Application.platform == RuntimePlatform.IPhonePlayer ? AmazonAPIKeyIOS : string.Empty;
+        private static string AppId => Application.platform switch
+        {
+            RuntimePlatform.Android => AndroidAppId,
+            RuntimePlatform.IPhonePlayer => IOSAppId,
+            _ => string.Empty
+        };
+
+        private static string AmazonAPIKey => Application.platform switch
+        {
+            RuntimePlatform.Android => AmazonAPIKeyAndroid,
+            RuntimePlatform.IPhonePlayer => AmazonAPIKeyIOS,
+            _ => string.Empty
+        };
 
         private PreBiddingListener _preBiddingListener;
 
@@ -83,40 +93,36 @@ namespace Sample
             
             AmazonPublisherServicesAdapter.PreBiddingListener = new CustomAmazonPublisherServicesPreBiddingListener();
 
-            ChartboostMediation.DidStart += error =>
+            ChartboostCore.ModuleInitializationCompleted += initializationResult =>
             {
-                if (error != null)
+                if (initializationResult.ModuleId != ChartboostMediation.CoreModuleId)
+                    return;
+                
+                if (initializationResult.Error.HasValue)
                 {
-                    Debug.LogError(error);
+                    Debug.LogError(initializationResult.Error.Value.Message);
                     return;
                 }
 
                 _chartboostMediationInitialized = true;
-                ChartboostMediation.SetTestMode(true);
-                ChartboostMediation.SetSubjectToGDPR(false);
-                ChartboostMediation.SetSubjectToCoppa(false);
-                ChartboostMediation.SetUserHasGivenConsent(true);
                 IsInitialized();
             };
 
-            ChartboostMediation.DidReceivePartnerInitializationData += partnerInitializationData =>
+            ChartboostMediation.DidReceivePartnerAdapterInitializationData += partnerInitializationData =>
             {
                 Debug.Log($"Partner Initialization Data: {partnerInitializationData}");
             };
-            
-            ChartboostMediationSettings.AndroidAppId = AndroidAppId;
-            ChartboostMediationSettings.AndroidAppSignature = AndroidAppSignature;
-            ChartboostMediationSettings.IOSAppId = IOSAppId;
-            ChartboostMediationSettings.IOSAppSignature = IOSAppSignature;
-            ChartboostMediation.StartWithOptions(ChartboostMediationSettings.AppId, ChartboostMediationSettings.AppSignature);
+
+            var sdkConfiguration = new SDKConfiguration(AppId, null);
+            ChartboostCore.Initialize(sdkConfiguration);
         }
 
         public async void LoadInterstitial()
         {
-            _interstitialAd?.Invalidate();
+            _interstitialAd?.Dispose();
             interstitialLoadImage.color = Color.white;
 
-            var interstitialAdLoadRequest = new ChartboostMediationFullscreenAdLoadRequest(InterstitialPlacement, new Dictionary<string, string>());
+            var interstitialAdLoadRequest = new FullscreenAdLoadRequest(InterstitialPlacement, new Dictionary<string, string>());
             interstitialLoadImage.color = _orange;
             var adLoadResult = await ChartboostMediation.LoadFullscreenAd(interstitialAdLoadRequest);
 
@@ -154,10 +160,10 @@ namespace Sample
 
         public async void LoadRewarded()
         {
-            _rewardedAd?.Invalidate();
+            _rewardedAd?.Dispose();
             rewardedLoadImage.color = Color.white;
 
-            var rewardedAdLoadRequest = new ChartboostMediationFullscreenAdLoadRequest(RewardedPlacement, new Dictionary<string, string>());
+            var rewardedAdLoadRequest = new FullscreenAdLoadRequest(RewardedPlacement, new Dictionary<string, string>());
             rewardedLoadImage.color = _orange;
             var adLoadResult = await ChartboostMediation.LoadFullscreenAd(rewardedAdLoadRequest);
 
@@ -195,14 +201,14 @@ namespace Sample
 
         public async void LoadBanner()
         {
-            _bannerView?.Destroy();
+            _bannerAd?.Dispose();
             bannerImage.color = Color.white;
 
-            var bannerAdLoadRequest = new ChartboostMediationBannerAdLoadRequest(BannerPlacement, ChartboostMediationBannerSize.Standard);
-            _bannerView = ChartboostMediation.GetBannerView();
+            var bannerAdLoadRequest = new BannerAdLoadRequest(BannerPlacement, BannerSize.Standard);
+            _bannerAd = ChartboostMediation.GetBannerAd();
 
             bannerImage.color = _orange;
-            var adLoadResult = await _bannerView.Load(bannerAdLoadRequest, ChartboostMediationBannerAdScreenLocation.TopCenter);
+            var adLoadResult = await _bannerAd.Load(bannerAdLoadRequest);
             
             if (adLoadResult.Error.HasValue)
             {

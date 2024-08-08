@@ -3,7 +3,6 @@ using System;
 namespace AmazonAds {
     public enum DTBAdNetwork { 
         GOOGLE_AD_MANAGER,
-        MOPUB_AD_SERVER,
         ADMOB,
         AD_GENERATION,
         IRON_SOURCE,
