@@ -2,7 +2,7 @@
   <packages>
     <package>com.chartboost:chartboost-core-sdk:1.0.+</package>
     <package>com.chartboost:chartboost-mediation-adapter-amazon-publisher-services:5.9.10.+</package>
-    <package>com.chartboost:chartboost-mediation-sdk:5.0+</package>
+    <package>com.chartboost:chartboost-mediation-sdk:5.2+</package>
     <package>com.iabtcf:iabtcf-decoder:2.0.10</package>
     <package>org.jetbrains.kotlin:kotlin-reflect:1.8.10</package>
   </packages>
