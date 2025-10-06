@@ -1,6 +1,6 @@
 # Chartboost Mediation Unity SDK - Amazon Publisher Services Prebidding Demo
 
-Chartboost Mediation APS (Amazon Publisher Services) adapter provides the option to set a prebidding delegate to compy with APS requirements. As such, this demo project demonstrates how to make use of the `PreBiddingListener` class to create your own custom prebid listener.
+Chartboost Mediation APS (Amazon Publisher Services) adapter provides the option to set a prebidding delegate to comply with APS requirements. As such, this demo project demonstrates how to make use of the `PreBiddingListener` class to create your own custom prebid listener.
 
 An example can be found at `Assets/Sample/CustomAmazonPublisherServicesPreBiddingListener.cs`.
 

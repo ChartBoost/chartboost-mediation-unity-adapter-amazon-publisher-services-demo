@@ -23,7 +23,7 @@ namespace Sample {
             PlayerSettings.bundleVersion = ChartboostMediation.SDKVersion;
 
             PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel22;
-            PlayerSettings.Android.targetSdkVersion = (AndroidSdkVersions)34;
+            PlayerSettings.Android.targetSdkVersion = (AndroidSdkVersions)35;
             PlayerSettings.iOS.targetOSVersionString = "12.5";
 
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, ApplicationBundleIdentifier);
