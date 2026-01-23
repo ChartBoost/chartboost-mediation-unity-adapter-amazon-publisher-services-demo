@@ -6,11 +6,11 @@ namespace AmazonAds {
         public Amazon.OnFailureWithErrorDelegate onFailedWithError;
         public Amazon.OnSuccessDelegate onSuccess;
 
-        public AdRequest () {
+        public AdRequest (AdNetworkInfo adNetworkInfo) {
 #if UNITY_ANDROID
-            client = new Android.DTBAdRequest ();
+            client = new Android.DTBAdRequest (adNetworkInfo);
 #elif UNITY_IOS
-            client = new IOS.DTBAdRequest ();
+            client = new IOS.DTBAdRequest (adNetworkInfo);
 #else
             //Other platforms not supported
 #endif

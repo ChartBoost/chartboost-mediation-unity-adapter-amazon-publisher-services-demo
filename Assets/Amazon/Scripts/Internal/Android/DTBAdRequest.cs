@@ -12,10 +12,19 @@ namespace AmazonAds.Android {
         UnityEngine.AndroidJavaClass playerClass;
         UnityEngine.AndroidJavaObject currentActivityObject;
 
-        public DTBAdRequest () {
+        public DTBAdRequest (AdNetworkInfo adNetworkInfo) {
             playerClass = new UnityEngine.AndroidJavaClass ("com.unity3d.player.UnityPlayer");
             currentActivityObject = playerClass.GetStatic<UnityEngine.AndroidJavaObject> ("currentActivity");
-            dTBAdRequest = new AndroidJavaObject ("com.amazon.device.ads.DTBAdRequest", currentActivityObject);
+
+            AndroidJavaClass adNetworkEnum = new AndroidJavaClass(AmazonConstants.apsAdNetworkClass);
+            if(adNetworkInfo == null)
+            {
+                adNetworkInfo = new AdNetworkInfo(ApsAdNetwork.UNKNOWN);
+            }
+            AndroidJavaObject adNetworkObj = adNetworkEnum.CallStatic<AndroidJavaObject>("valueOf", adNetworkInfo.getAdNetworkName());
+            AndroidJavaObject apsAdNetworkInfo = new AndroidJavaObject(AmazonConstants.apsAdNetworkInfoClass, adNetworkObj);
+
+            dTBAdRequest = new AndroidJavaObject ("com.amazon.device.ads.DTBAdRequest", currentActivityObject, apsAdNetworkInfo);
         }
 
         public void Dispose() {

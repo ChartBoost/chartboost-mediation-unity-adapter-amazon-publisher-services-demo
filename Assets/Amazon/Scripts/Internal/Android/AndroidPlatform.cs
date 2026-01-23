@@ -76,10 +76,14 @@ namespace AmazonAds.Android {
         {
             adRegistration.RemoveCustomAttr(forKey);
         }
-
-        public override void SetAdNetworkInfo(AdNetworkInfo adNetworkInfo) 
+        public override void SetDsaTransparency(string data)
         {
-            adRegistration.SetAdNetworkInfo(adNetworkInfo.getAdNetworkName());
+            adRegistration.setDsaTransparency(data);
+        }
+
+        public override void SetSkAdnTestMode(string supportedVersion) 
+        {
+            throw new System.NotImplementedException();
         }
 
 #if UNITY_IOS
@@ -92,6 +96,7 @@ namespace AmazonAds.Android {
         {
             throw new System.NotImplementedException();
         }
+
 #endif
     }
 }

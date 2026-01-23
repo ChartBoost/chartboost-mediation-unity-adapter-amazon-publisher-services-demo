@@ -1,28 +1,33 @@
 using System;
 
 namespace AmazonAds {
-    public enum DTBAdNetwork { 
+    public enum ApsAdNetwork {
+        UNKNOWN,
         GOOGLE_AD_MANAGER,
         ADMOB,
         AD_GENERATION,
-        IRON_SOURCE,
+        UNITY_LEVELPLAY,
         MAX,
         NIMBUS,
+        CUSTOM_MEDIATION,
         OTHER
     }
     
     public class AdNetworkInfo {
-        private DTBAdNetwork adNetwork;
+        private ApsAdNetwork adNetwork;
 
-        public AdNetworkInfo(DTBAdNetwork dtbAdNetwork) {
-            adNetwork = dtbAdNetwork;
+        public AdNetworkInfo(ApsAdNetwork apsAdNetwork) {
+            if (apsAdNetwork == null) {
+                adNetwork = ApsAdNetwork.UNKNOWN;
+            }
+            adNetwork = apsAdNetwork;
         }
 
         public String getAdNetworkName() {
             return adNetwork.ToString();
         }
 
-        internal DTBAdNetwork getAdNetwork() {
+        internal ApsAdNetwork getAdNetwork() {
             return adNetwork;
         }
     }

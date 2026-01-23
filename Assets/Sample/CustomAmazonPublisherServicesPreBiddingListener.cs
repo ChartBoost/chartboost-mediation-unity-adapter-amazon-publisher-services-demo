@@ -19,24 +19,26 @@ namespace Sample
             
             Debug.Log($"{Tag} Format: {request.Format}, Chartboost Placement: {request.MediationPlacement}, Amazon Placement: {amazonPlacement}");
 
+            var adNetworkInfo = new AdNetworkInfo(ApsAdNetwork.CUSTOM_MEDIATION);
+            
             switch (request.Format)
             {
                 case "rewarded":
                     var width = amazonSettings.Width ?? 0;
                     var height = amazonSettings.Height ?? 0;
-                    adRequest = new APSVideoAdRequest(width, height, amazonPlacement);
+                    adRequest = new APSVideoAdRequest(width, height, amazonPlacement, adNetworkInfo);
                     break;
 
                 case "interstitial":
                 case "rewarded_interstitial":
-                    adRequest = new APSInterstitialAdRequest(amazonPlacement);
+                    adRequest = new APSInterstitialAdRequest(amazonPlacement, adNetworkInfo);
                     break;
 
                 case "banner":
                 case "adaptive_banner":
                     var bannerWidth = bannerSize.HasValue ? (int)bannerSize.Value.Width : 0;
                     var bannerHeight = bannerSize.HasValue ? (int)bannerSize.Value.Height : 0;
-                    adRequest = new APSBannerAdRequest(bannerWidth, bannerHeight, amazonPlacement);
+                    adRequest = new APSBannerAdRequest(bannerWidth, bannerHeight, amazonPlacement, adNetworkInfo);
                     break;
                 
                 default:

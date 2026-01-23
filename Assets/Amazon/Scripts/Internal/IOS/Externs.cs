@@ -17,7 +17,7 @@ namespace AmazonAds.IOS
         public static IntPtr _createBannerAdSize(int width, int height, string uuid) { return IntPtr.Zero; }
         public static IntPtr _createVideoAdSize(int width, int height, string uuid){ return IntPtr.Zero; }
         public static IntPtr _createInterstitialAdSize(string uuid) { return IntPtr.Zero; }
-        public static IntPtr _createAdLoader() { return IntPtr.Zero; }
+        public static IntPtr _createAdLoader(int adNetworkInfo) { return IntPtr.Zero; }
         public static void _setSizes(IntPtr adLoader, IntPtr size) {}
         public static void _loadAd(IntPtr adLoader, IntPtr callback) {}
         public static void _loadSmartBanner(IntPtr adLoader, IntPtr callback) {}
@@ -60,7 +60,6 @@ namespace AmazonAds.IOS
         public static void _setAPSFrequencyCappingIdFeatureEnabled(bool frequencyCappingIdFeatureEnabled) {}
         public static void _addCustomAttribute(string withKey, string value) {}
         public static void _removeCustomAttribute(string forKey) {}
-        public static void _setAdNetworkInfo(int adNetwork) {}
         public static void _setLocalExtras(string adUnitId, IntPtr localExtras) {}
         public static IntPtr _createAdView(int width, int height, IntPtr dispatcher) { return IntPtr.Zero; }
         public static IntPtr _createAdInterstitial(IntPtr dispatcher) { return IntPtr.Zero; }
@@ -72,6 +71,8 @@ namespace AmazonAds.IOS
         public static IntPtr _getAdLoaderFromAdError(IntPtr adErrorInfo) { return IntPtr.Zero; }
         public static int _fetchAdWidth(IntPtr resp) { return -1; }
         public static int _fetchAdHeight(IntPtr resp) { return -1; }
+        public static void _amazonSetDsaTransparency(string dsaData) {}
+        public static void _amazonSetSKAdnTestMode(string supportedSkAdNVersion) {}
 #else
         [DllImport("__Internal")]
         public static extern void _amazonInitialize(string appKey);
@@ -96,7 +97,7 @@ namespace AmazonAds.IOS
         [DllImport("__Internal")]
         public static extern IntPtr _createInterstitialAdSize(string uuid);
         [DllImport("__Internal")]
-        public static extern IntPtr _createAdLoader();
+        public static extern IntPtr _createAdLoader(int adNetworkInfo);
         [DllImport("__Internal")]
         public static extern void _setSizes(IntPtr adLoader, IntPtr size);
         [DllImport("__Internal")]
@@ -118,6 +119,10 @@ namespace AmazonAds.IOS
         DTBAdInterstitialDispatcher.OnAdOpenDelegate onAdOpenDelegate, DTBAdInterstitialDispatcher.OnAdClosedDelegate onAdClosedDelegate);
         [DllImport("__Internal")]
         public static extern void _amazonSetMRAIDPolicy(int policy);
+        [DllImport("__Internal")]
+        public static extern void _amazonSetDsaTransparency(string dsaData);
+        [DllImport("__Internal")]
+        public static extern void _amazonSetSKAdnTestMode(string supportedSkAdNVersion);
         [DllImport("__Internal")]
         public static extern int _amazonGetMRAIDPolicy();
         [DllImport("__Internal")]
@@ -184,8 +189,6 @@ namespace AmazonAds.IOS
         public static extern void _addCustomAttribute(string withKey, string value);
         [DllImport("__Internal")]
         public static extern void _removeCustomAttribute(string forKey);
-        [DllImport("__Internal")]
-        public static extern void _setAdNetworkInfo(int adNetwork);
         [DllImport("__Internal")]
         public static extern IntPtr _createAdView(int width, int height, IntPtr dispatcher);
         [DllImport("__Internal")]

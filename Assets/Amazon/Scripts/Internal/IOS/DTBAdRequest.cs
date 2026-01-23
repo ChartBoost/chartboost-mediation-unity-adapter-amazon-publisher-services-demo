@@ -10,8 +10,12 @@ namespace AmazonAds.IOS {
         private IInterstitialAdSize _interstitialAdSize = null;
         private IVideo _videoAdSize = null;
 
-        public DTBAdRequest () {
-            adLoader = Externs._createAdLoader ();
+        public DTBAdRequest (AdNetworkInfo adNetworkInfo) {
+            if (adNetworkInfo == null)
+            {
+                adNetworkInfo = new AdNetworkInfo(ApsAdNetwork.UNKNOWN);
+            }
+            adLoader = Externs._createAdLoader ((int)adNetworkInfo.getAdNetwork());
         }
 
         public DTBAdRequest (IntPtr adRequest) {

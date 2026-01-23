@@ -5,8 +5,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 // Android Resolver Dependencies Start
     implementation 'com.chartboost:chartboost-core-sdk:1.0.+' // Packages/com.chartboost.core/Editor/ChartboostCoreDependencies.xml:5
-    implementation 'com.chartboost:chartboost-mediation-adapter-amazon-publisher-services:5.9.10.+' // Packages/com.chartboost.mediation.unity.adapter.amazon-publisher-services/Editor/AmazonPublisherServicesAdapterDependencies.xml:5
-    implementation 'com.chartboost:chartboost-mediation-sdk:5.2+' // Packages/com.chartboost.mediation/Editor/ChartboostMediationDependencies.xml:10
+    implementation 'com.chartboost:chartboost-mediation-adapter-amazon-publisher-services:5.10.0.+' // Packages/com.chartboost.mediation.unity.adapter.amazon-publisher-services/Editor/AmazonPublisherServicesAdapterDependencies.xml:5
+    implementation 'com.chartboost:chartboost-mediation-sdk:5.3+' // Packages/com.chartboost.mediation/Editor/ChartboostMediationDependencies.xml:10
     implementation 'com.iabtcf:iabtcf-decoder:2.0.10' // Packages/com.chartboost.mediation.unity.adapter.amazon-publisher-services/Editor/AmazonPublisherServicesAdapterDependencies.xml:8
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.8.10' // Packages/com.chartboost.core/Editor/ChartboostCoreDependencies.xml:6
 // Android Resolver Dependencies End

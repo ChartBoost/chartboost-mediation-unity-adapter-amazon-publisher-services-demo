@@ -2,7 +2,7 @@ using System;
 
 public static class AmazonConstants
 {
-    public const string VERSION = "1.9.1";
+    public const string VERSION = "2.0.0";
     public const string RELEASE_NOTES_URL = "https://ams.amazon.com/webpublisher/uam/docs/aps-mobile/resources"; //TODO : add Unity Release Notes link
 
     public const string titleAboutDialog = "About Amazon SDK";
@@ -23,8 +23,8 @@ public static class AmazonConstants
     internal const string sdkUtilitiesClass = "com.amazon.device.ads.SDKUtilities";
     internal const string dtbAdViewClass = "com.amazon.device.ads.DTBAdView";
     internal const string dtbAdInterstitialClass = "com.amazon.device.ads.DTBAdInterstitial";
-    internal const string dtbAdNetworkClass = "com.amazon.device.ads.DTBAdNetwork";
-    internal const string dtbAdNetworkInfoClass = "com.amazon.device.ads.DTBAdNetworkInfo";
+    internal const string apsAdNetworkClass = "com.amazon.aps.ads.model.ApsAdNetwork";
+    internal const string apsAdNetworkInfoClass = "com.amazon.aps.ads.ApsAdNetworkInfo";
 
 }
 

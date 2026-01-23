@@ -19,7 +19,8 @@ namespace AmazonAds {
         public abstract void SetVendorList(List<int> vendorList);
         public abstract void AddCustomAttribute(string withKey, string value);
         public abstract void RemoveCustomAttr(String forKey);
-        public abstract void SetAdNetworkInfo(AdNetworkInfo adNetworkInfo);
+        public abstract void SetDsaTransparency(string data);
+        public abstract void SetSkAdnTestMode(string supportedSkAdnVersion);
 #if UNITY_IOS
         public abstract void SetAPSPublisherExtendedIdFeatureEnabled(bool isEnable);
         public abstract void SetLocalExtras(string adUnitId, AmazonAds.AdResponse adResponse);

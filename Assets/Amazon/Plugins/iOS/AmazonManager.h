@@ -23,7 +23,7 @@
 - (DTBAdSize*)createBannerAdSize:(int)width height:(int)height uuid:(NSString*)uuid;
 - (DTBAdSize*)createVideoAdSize:(int)width height:(int)height uuid:(NSString*)uuid;
 - (DTBAdSize*)createInterstitialAdSize:(NSString*)uuid;
-- (DTBAdLoader*)createAdLoader;
+- (DTBAdLoader*)createAdLoader:(int)adNetwork;
 - (void)setSizes:(DTBAdLoader*)adLoader size:(DTBAdSize*)size;
 - (void)loadAd:(DTBAdLoader*)adLoader callback:(AmazonUnityCallback*)callback;
 - (void)loadSmartBanner:(DTBAdLoader*)adLoader callback:(AmazonUnityCallback*)callback;
@@ -63,8 +63,9 @@
 -(void)setAPSPublisherExtendedIdFeatureEnabled:(BOOL)isEnabled;
 -(void)addCustomAttribute:(NSString *)withKey value:(id)value;
 -(void)removeCustomAttribute:(NSString *)forKey;
--(void)setAdNetworkInfo:(DTBAdNetworkInfo *)dtbAdNetworkInfo;
 -(void)setLocalExtras:(NSString *)adUnitId localExtras:(NSDictionary *)localExtras;
 -(NSDictionary *)getMediationHintsDict:(DTBAdResponse*)response isSmart:(BOOL)isSmart;
 -(void)showInterstitialAd:(DTBAdInterstitialDispatcher*)dispatcher;
+-(void)setDsaTransparency:(const char *)dsaPrivacyData;
+-(void)setSkAdNTestMode:(const char *)supportedSkAdnTestMode;
 @end

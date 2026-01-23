@@ -107,9 +107,14 @@ namespace AmazonAds {
             api.RemoveCustomAttr(forKey);
         }
 
-        public static void SetAdNetworkInfo(AdNetworkInfo adNetworkInfo)
+        public static void SetDsaTransparency(string data)
         {
-            api.SetAdNetworkInfo(adNetworkInfo);
+            api.SetDsaTransparency(data);
+        }
+
+        public static void SetSkAdnTestMode(string supportedSkAdnetworkVersion) 
+        {
+            api.SetSkAdnTestMode(supportedSkAdnetworkVersion);
         }
 
 #if UNITY_IOS

@@ -4,19 +4,19 @@ using UnityEngine;
 namespace AmazonAds {
     public class APSBannerAdRequest : AdRequest {
 
-        public APSBannerAdRequest () : base() { 
+        public APSBannerAdRequest (AdNetworkInfo adNetworkInfo) : base(adNetworkInfo) { 
         }
 
-        public APSBannerAdRequest (string slotGroupName) : base() {
+        public APSBannerAdRequest (string slotGroupName, AdNetworkInfo adNetworkInfo) : base(adNetworkInfo) {
             client.SetSlotGroup (slotGroupName);
         }
 
-        public APSBannerAdRequest (int width, int height, string uid) : base() {
+        public APSBannerAdRequest (int width, int height, string uid, AdNetworkInfo adNetworkInfo) : base(adNetworkInfo) {
             AdSize size = new AdSize (width, height, uid);
             client.SetSizes (size.GetInstance ());
         }
 
-        public APSBannerAdRequest (AdSize size) {
+        public APSBannerAdRequest (AdSize size, AdNetworkInfo adNetworkInfo) :base(adNetworkInfo) {
             client.SetSizes (size.GetInstance ());
         }
 

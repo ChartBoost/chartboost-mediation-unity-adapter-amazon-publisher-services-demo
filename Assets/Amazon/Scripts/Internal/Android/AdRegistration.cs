@@ -141,7 +141,25 @@ namespace AmazonAds.Android {
             public void AddSlot (IAdSize size) {
                 dTBSlot.Call ("addSlot", ((DTBAdSize) size).GetInstance ());
             }
-        } 
+        }
+
+        public void setDsaTransparency(string dsaData)
+        {
+            try
+            {
+                if (dsaData == null)
+                  {
+                    AndroidJavaObject nullString = null;
+                    adRegistration.CallStatic("setDsaTransparency", nullString);
+                    return;
+                   }
+                AndroidJavaObject dsaJsonObject = new AndroidJavaObject("org.json.JSONObject", dsaData);
+                adRegistration.CallStatic("setDsaTransparency", dsaJsonObject);
+
+            } catch (AndroidJavaException e) {
+                Debug.Log("Invalid DSA privacy data"+e.Message);
+            }
+        }
 
         public void AddCustomAttribute (string withKey, string value) {
             adRegistration.CallStatic ("addCustomAttribute", withKey, value);
@@ -151,11 +169,5 @@ namespace AmazonAds.Android {
             adRegistration.CallStatic ("removeCustomAttribute", forKey);
         }
 
-        public void SetAdNetworkInfo (string adNetworkName) {
-            AndroidJavaClass adNetworkEnum = new AndroidJavaClass (AmazonConstants.dtbAdNetworkClass);
-            AndroidJavaObject adNetworkObj = adNetworkEnum.CallStatic<AndroidJavaObject> ("valueOf", adNetworkName);
-            AndroidJavaObject dtbAdNetworkInfo = new AndroidJavaObject (AmazonConstants.dtbAdNetworkInfoClass, adNetworkObj);
-            adRegistration.CallStatic ("setAdNetworkInfo", dtbAdNetworkInfo);
-        }
     }
 }

@@ -69,8 +69,9 @@ static NSString * const SKADNETWORK_PARAM = @"skadn_params";
     return [[DTBAdSize alloc] initInterstitialAdSizeWithSlotUUID:uuid];
 }
 
-- (DTBAdLoader*)createAdLoader{
-    return [DTBAdLoader new];
+- (DTBAdLoader*)createAdLoader:(int)adNetwork {
+    DTBAdNetworkInfo *dtbAdNetworkInfo = [[DTBAdNetworkInfo alloc]initWithNetworkName:(DTBAdNetwork)adNetwork];
+    return [[DTBAdLoader alloc] initWithAdNetworkInfo:dtbAdNetworkInfo];
 }
 
 - (void)setSizes:(DTBAdLoader*)adLoader size:(DTBAdSize*)size{
@@ -287,16 +288,43 @@ static NSString * const SKADNETWORK_PARAM = @"skadn_params";
     [DTBAds.sharedInstance removeCustomAttribute:forKey];
 }
 
--(void)setAdNetworkInfo:(DTBAdNetworkInfo *)dtbAdNetworkInfo {
-    [[DTBAds sharedInstance] setAdNetworkInfo:dtbAdNetworkInfo];
-}
-
 -(void)setLocalExtras:(NSString *)adUnitId localExtras:(NSDictionary *)localExtras {
     [DTBAds setLocalExtras:adUnitId localExtras:localExtras];
 }
 
 -(NSDictionary *)getMediationHintsDict:(DTBAdResponse*)response isSmart:(BOOL)isSmart{
     return [response mediationHints:isSmart];
+}
+
+-(void)setDsaTransparency:(const char *)dsaPrivacyJsonString {
+    if(dsaPrivacyJsonString == NULL) {
+        [[DTBAds sharedInstance] setDsaTransparency:nil];
+        return;
+    }
+    NSString *dsaPrivacyString = [NSString stringWithUTF8String:dsaPrivacyJsonString];
+    NSData *dsaPrivacyData = [dsaPrivacyString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error; 
+
+    NSDictionary *dsaPrivacyDictionary = [NSJSONSerialization JSONObjectWithData:dsaPrivacyData
+                                                                        options:kNilOptions
+                                                                        error:&error];
+
+    if(error) {
+          NSLog(@"Unable to Parse Json String to Dictionary");
+          return;
+    }                                                                   
+
+    [[DTBAds sharedInstance] setDsaTransparency:dsaPrivacyDictionary];
+}
+
+-(void) setSkAdNTestMode:(const char *) supportedSkAdNVersion {
+    if (supportedSkAdNVersion == NULL) {
+        DTBAds.sharedInstance.debugProperties.skadnTestMode = NO;
+        return;
+    }
+
+    DTBAds.sharedInstance.debugProperties.skadnTestMode = YES;
+    DTBAds.sharedInstance.debugProperties.skadnTestModeVersion = [NSString stringWithUTF8String:supportedSkAdNVersion];
 }
 
 -(void)showInterstitialAd:(DTBAdInterstitialDispatcher*)dispatcher {
@@ -311,5 +339,4 @@ static NSString * const SKADNETWORK_PARAM = @"skadn_params";
     }
     return nil;
 }
-
 @end

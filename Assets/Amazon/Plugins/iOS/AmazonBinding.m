@@ -60,8 +60,8 @@ DTBAdSize* _createVideoAdSize(int width, int height, const char* uuid){
 DTBAdSize* _createInterstitialAdSize(const char* uuid){
                 return [[AmazonManager sharedManager] createInterstitialAdSize:GetStringParam(uuid)];
 }
-DTBAdLoader* _createAdLoader(){
-    return [[AmazonManager sharedManager]createAdLoader];
+DTBAdLoader* _createAdLoader(int adNetwork){
+    return [[AmazonManager sharedManager]createAdLoader:adNetwork];
 }
 
 void _setSizes(DTBAdLoader* adLoader, DTBAdSize* size){
@@ -227,13 +227,16 @@ void _addCustomAttribute(const char *withKey, const void *value) {
   [[AmazonManager sharedManager] addCustomAttribute:GetStringParam(withKey) value:GetStringParam(value)];
 }
 
-void _removeCustomAttribute(const char* forKey) {
-  [[AmazonManager sharedManager] removeCustomAttribute:GetStringParam(forKey)];
+void _amazonSetDsaTransparency(const char *dsaPrivacyData){
+    [[AmazonManager sharedManager] setDsaTransparency:dsaPrivacyData];
 }
 
-void _setAdNetworkInfo(int adNetworkId) {
-    DTBAdNetworkInfo *dtbAdNetworkInfo = [[DTBAdNetworkInfo alloc]initWithNetworkName:(DTBAdNetwork)adNetworkId];
-    [[AmazonManager sharedManager] setAdNetworkInfo:dtbAdNetworkInfo];
+void _amazonSetSKAdnTestMode(const char *supportedSkAdnTestMode) {
+    [[AmazonManager sharedManager] setSkAdNTestMode:supportedSkAdnTestMode];
+}
+
+void _removeCustomAttribute(const char* forKey) {
+  [[AmazonManager sharedManager] removeCustomAttribute:GetStringParam(forKey)];
 }
 
 void _setLocalExtras(const char *adUnitId, NSDictionary *localExtras) {

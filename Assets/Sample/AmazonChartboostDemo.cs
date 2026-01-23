@@ -78,7 +78,6 @@ namespace Sample
             Amazon.Initialize(AmazonAPIKey);
             Amazon.UseGeoLocation(true);
             Amazon.IsLocationEnabled();
-            Amazon.SetAdNetworkInfo(new AdNetworkInfo(DTBAdNetwork.OTHER));
             SetTestFlags();
 #if UNITY_IOS
             Amazon.SetAPSPublisherExtendedIdFeatureEnabled(true);

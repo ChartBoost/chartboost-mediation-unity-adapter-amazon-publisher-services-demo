@@ -113,11 +113,15 @@ namespace AmazonAds.IOS {
         {
             Externs._removeCustomAttribute(forKey);
         }
-
-        public override void SetAdNetworkInfo(AdNetworkInfo adNetworkInfo) 
+        public override void SetDsaTransparency(string dsaData)
         {
-            DTBAdNetwork dtbAdNetwork = adNetworkInfo.getAdNetwork();
-            Externs._setAdNetworkInfo((int)dtbAdNetwork);
+            Externs._amazonSetDsaTransparency(dsaData);
+        }
+
+        public override void SetSkAdnTestMode(string supportedSkAdnVersion)
+        {
+
+            Externs._amazonSetSKAdnTestMode(supportedSkAdnVersion);
         }
 
 #if UNITY_IOS
